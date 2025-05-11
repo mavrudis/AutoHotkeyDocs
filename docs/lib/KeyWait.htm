@@ -22,7 +22,7 @@
   <dd>
       <p>Type: <a href="../Concepts.htm#strings">String</a></p>
       <p>This can be just about any single character from the keyboard or one of the key names from the <a href="../KeyList.htm">key list</a>, such as a mouse/controller button. Controller attributes other than buttons are not supported.</p>
-      <p>An explicit virtual key code such as <code>vkFF</code> may also be specified. This is useful in the rare case where a key has no name and produces no visible character when pressed. Its virtual key code can be determined by following the steps at the bottom of the <a href="../KeyList.htm#SpecialKeys">key list page</a>.</p></dd>
+      <p>An explicit virtual key code such as <code class="no-highlight">vkFF</code> may also be specified. This is useful in the rare case where a key has no name and produces no visible character when pressed. Its virtual key code can be determined by following the steps at the bottom of the <a href="../KeyList.htm#SpecialKeys">key list page</a>.</p></dd>
 
   <dt>Options</dt>
   <dd>
@@ -31,7 +31,7 @@
       <p>Otherwise, specify a string of one or more of the following options (in any order, with optional spaces in between):</p>
       <p><strong>D:</strong> Wait for the key to be pushed down.</p>
       <p><strong>L:</strong> Check the logical state of the key, which is the state that the OS and the active window believe the key to be in (not necessarily the same as the physical state). This option is ignored for controller buttons.</p>
-      <p><strong>T:</strong> Timeout (e.g. <code>T3</code>). The number of seconds to wait before timing out and returning 0. If the key or button achieves the specified state, the function will not wait for the timeout to expire. Instead, it will immediately return 1.</p>
+      <p><strong>T:</strong> Timeout (e.g. <code class="no-highlight">T3</code>). The number of seconds to wait before timing out and returning 0. If the key or button achieves the specified state, the function will not wait for the timeout to expire. Instead, it will immediately return 1.</p>
       <p>The timeout value can be a floating point number such as 2.5, but it should not be a hexadecimal value such as 0x03.</p></dd>
 
 </dl>
@@ -93,7 +93,7 @@ KeyWait "Alt"</pre>
 <p><a class="ex_number" href="#ExDouble"></a> Detects when a key has been double-pressed (similar to double-click). KeyWait is used to stop the keyboard's auto-repeat feature from creating an unwanted double-press when you hold down the RControl key to modify another key. It does this by keeping the hotkey's thread running, which blocks the auto-repeats by relying upon #MaxThreadsPerHotkey being at its default setting of 1. For a more elaborate script that distinguishes between single, double and triple-presses, see <a href="SetTimer.htm#ExampleCount">SetTimer example #3</a>.</p>
 <pre>~RControl::
 {
-    if (A_PriorHotkey != "~RControl" or A_TimeSincePriorHotkey &gt; 400)
+    if (A_PriorHotkey != ThisHotkey or A_TimeSincePriorHotkey &gt; 400)
     {
         <em>; Too much time between presses, so this isn't a double-press.</em>
         KeyWait "RControl"

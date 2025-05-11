@@ -239,15 +239,15 @@ MsgBox Join("`n", <b class="blue">substrings*</b>)</pre>
 <p>Otherwise, to refer to an existing global variable inside a function (or create a new one), declare the variable as global prior to using it. For example:</p>
 <pre>SetDataDir(Dir)
 {
-    <strong>global</strong> LogFileName
+    global LogFileName
     LogFileName := Dir . "\My.log"
-    <strong>global</strong> DataDir := Dir  <em>; Declaration combined with assignment, described <a href="#DeclareInit">below</a>.</em>
+    global DataDir := Dir  <em>; Declaration combined with assignment, described <a href="#DeclareInit">below</a>.</em>
 }
 </pre>
 <p id="AssumeGlobal"><strong>Assume-global mode:</strong> If a function needs to access or create a large number of global variables, it can be defined to assume that all its variables are global (except its parameters) by making its first line the word "global". For example:</p>
 <pre>SetDefaults()
 {
-    <strong>global</strong>
+    global
     MyGlobal := 33  <em>; Assigns 33 to a global variable, first creating the variable if necessary.</em>
     local x, y:=0, z  <em>; Local variables must be declared in this mode, otherwise they would be assumed global.</em>
 }</pre>
@@ -256,7 +256,7 @@ MsgBox Join("`n", <b class="blue">substrings*</b>)</pre>
 <p>Static variables are always implicitly local, but differ from locals because their values are remembered between calls. For example:</p>
 <pre>LogToFile(TextToLog)
 {
-    <strong>static</strong> LoggedLines := 0
+    static LoggedLines := 0
     LoggedLines += 1  <em>; Maintain a tally locally (its value is remembered between calls).</em>
     global LogFileName
     FileAppend LoggedLines ": " TextToLog "`n", LogFileName
@@ -266,7 +266,7 @@ MsgBox Join("`n", <b class="blue">substrings*</b>)</pre>
 <p id="AssumeStatic"><strong>Assume-static mode:</strong> A function may be defined to assume that all its undeclared local variables are static (except its parameters) by making its first line the word "static". For example:</p>
 <pre>GetFromStaticArray(WhichItemNumber)
 {
-    <strong>static</strong>
+    static
     static FirstCallToUs := true  <em>; Each static declaration's initializer still runs only once.</em>
     if FirstCallToUs  <em>; Create a static array during the first call, but not on subsequent calls.</em>
     {
@@ -306,7 +306,7 @@ static TotalAttempts := 0, PrevResult</pre>
 <p>In the example above, the FindColor() function never gets called if the <em>ColorName</em> variable is empty. This is because the left side of the <em>AND</em> would be <em>false</em>, and thus its right side would be incapable of making the final outcome <em>true</em>.</p>
 <p>Because of this behavior, it's important to realize that any side-effects produced by a function (such as altering a global variable's contents) might never occur if that function is called on the right side of an <em>AND</em> or <em>OR</em>.</p>
 <p>It should also be noted that short-circuit evaluation cascades into nested <em>AND</em>s and <em>OR</em>s. For example, in the following expression, only the leftmost comparison occurs whenever <em>ColorName</em> is blank. This is because the left side would then be enough to determine the final answer with certainty:</p>
-<pre>if (ColorName = "" <u>OR</u> FindColor(ColorName, Region1) <u>OR</u> FindColor(ColorName, Region2))
+<pre>if (ColorName = "" OR FindColor(ColorName, Region1) OR FindColor(ColorName, Region2))
     break   <em>; Nothing to search for, or a match was found.</em></pre>
 <p>As shown by the examples above, any expensive (time-consuming) functions should generally be called on the right side of an <em>AND</em> or <em>OR</em> to enhance performance. This technique can also be used to prevent a function from being called when one of its parameters would be passed a value it considers inappropriate, such as an empty string.</p>
 <p>The <a href="Variables.htm#ternary">ternary conditional operator (?:)</a> also short-circuits by not evaluating the losing branch.</p>

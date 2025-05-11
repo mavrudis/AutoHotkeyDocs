@@ -47,7 +47,7 @@
 <p><a href="../Variables.htm#LastError">A_LastError</a> is set to the result of the operating system's GetLastError() function.</p>
 
 <h2 id="Binary">Reading Binary Data</h2>
-<p>When the <code>RAW</code> option is used, the return value is a <a href="Buffer.htm">Buffer</a> object containing the raw, unmodified contents of the file. The object's <a href="Buffer.htm#Size">Size</a> property returns the number of bytes read. <a href="NumGet.htm">NumGet</a> or <a href="StrGet.htm">StrGet</a> can be used to retrieve data from the buffer. For example:</p>
+<p>When the <code class="no-highlight">RAW</code> option is used, the return value is a <a href="Buffer.htm">Buffer</a> object containing the raw, unmodified contents of the file. The object's <a href="Buffer.htm#Size">Size</a> property returns the number of bytes read. <a href="NumGet.htm">NumGet</a> or <a href="StrGet.htm">StrGet</a> can be used to retrieve data from the buffer. For example:</p>
 <pre>buf := FileRead(A_AhkPath, "RAW")
 if StrGet(buf, 2, "cp0") == "MZ"  <em>; Looks like an executable file...</em>
 {
